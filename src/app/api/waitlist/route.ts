@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase";
 
 // ── Rate limiting (in-memory) ────────────────────────────────────
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Insert into Supabase
-  const { error } = await supabaseAdmin.from("waitlist_signups").insert({
+  const { error } = await getSupabaseAdmin().from("waitlist_signups").insert({
     email: email.toLowerCase().trim(),
     tier: tier ?? null,
     source,
